@@ -1,50 +1,47 @@
-# React + TypeScript + Vite
+# DataVerse
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This project is a web-based discussion forum where users can post Questions, answer the questions of others.
 
-Currently, two official plugins are available:
+## Features
+- Create a Question
+- Answer other's Questions
+- Comment on other's answers
+- Search functionality
+- Category based division 
+## Technologies Used
+- Frontend: React, Tailwindcss
+- State Management: Recoil
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/Priyanshu9382/dataverse.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd Discussion-forum
+    ```
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-## Expanding the ESLint configuration
+## Usage
+1. Start the development server:
+    ```bash
+    npm run dev
+    ```
+2. Open your browser and navigate to `http://localhost:5173`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Issues 
+There are few issues which are still not working in this website:
+ - User authentication is not set, only the login and SignUp page is added but it does not work.
+ - The answering option and comment option on any other's question has not been added yet. Just their frontend is added which only shows the prestored data.
+ - Search functionality is just a basic one.
+ - As user authentication has not been done, any one putting question would be given the user name Guest.
+ - Also it store the question only upto the time the user is active, as the user refreshes the page the website shows only the prestored posts. 
+ - When searched some term and then one gets redirected to the home page the searchbar is not set to empty automatically.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Contact
+If you have any questions or suggestions, feel free to reach out to us at [priyanshu.web.dev123@gmail.com].
