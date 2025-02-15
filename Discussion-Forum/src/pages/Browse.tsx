@@ -31,7 +31,7 @@ const Browse: React.FC = () => {
             {/* The left side of the landing page */}
         <Left/>
         {/* The right side of the landing page */}
-        <div className="min-h-screen w-4/5 bg-[#1a1a1a] p-5 rounded-2xl ml-1 mr-1 overflow-y-auto scrollbar-thin scroll scrollbar-track-black ">
+        <div className="min-h-screen w-full sm:w-4/5 bg-[#1a1a1a] p-5 rounded-2xl ml-1 mr-1 overflow-y-auto scrollbar-thin scroll scrollbar-track-black ">
         <div className="mt-3">
           <div>
             <h2 className="font-bold text-gray-500 pl-5 text-xl">

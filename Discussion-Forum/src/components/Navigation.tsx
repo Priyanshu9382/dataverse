@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import React,{  useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { inputState, searchTermState, questionState } from "../states/state";
+import { inputState, searchTermState, questionState, isMenuClicked } from "../states/state";
 import useSearch from "./useSearch";
 import { useNavigate } from "react-router-dom";
+import { Menu,X } from "lucide-react";
 const Navigation = () => {
   const [input, setInput] = useRecoilState(inputState);
   const [searchTerm, setSearchTerm] = useRecoilState(searchTermState);
   const [, setFilteredEvents] = useRecoilState(questionState);
+  const [isClicked, setIsClicked] = useRecoilState(isMenuClicked);
   const navigate = useNavigate();
 
   // Get search results
@@ -28,20 +30,29 @@ const Navigation = () => {
       navigate("/");
     }
   };
-
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  }
+  console.log(isClicked);
   // Update Recoil state when results change
   useEffect(() => {
     setFilteredEvents(results);
   }, [results, setFilteredEvents]);
 
   return (
-    <div className="flex justify-between items-center p-4 bg-transparent  text-white">
+    <div className="flex justify-between gap-4 items-center p-4 bg-transparent  text-white">
       {/* The logo of the website */}
       <div className="text-left">
-        <span className="text-left text-2xl text-red-600 cursor-pointer">
+        <span className="text-left hidden sm:inline sm:text-2xl text-red-600 cursor-pointer">
           <Link to={"/"} className="font-bold">
             DataVerse
           </Link>
+        </span>
+        <span className={`sm:hidden ${!isClicked?'':'hidden'} text-2xl text-red-600 cursor-pointer`}>
+            <Menu onClick={handleClick} size={30} color="white" />
+        </span>
+        <span className={`sm:hidden ${isClicked?'':'hidden'} text-2xl text-red-600 cursor-pointer`}>
+            <X onClick={handleClick} size={30} color="white" />
         </span>
       </div>
 
@@ -56,14 +67,14 @@ const Navigation = () => {
       />
 
       {/* The login and signup buttons */}
-      <div className="btns flex gap-2 justify-end w-1/6">
+      <div className="btns flex gap-2 justify-end sm:w-2xs ">
         <Link to={"/login"}>
-          <button className="bg-red-600 w-24 h-10 rounded-full text-white font-bold cursor-pointer">
+          <button className="bg-red-600 w-12 sm:w-24 h-8 sm:h-10 rounded-full text-xs sm:text-base text-white font-bold cursor-pointer">
             Login
           </button>
         </Link>
         <Link to={"/signup"}>
-          <button className="bg-[#292727] text-white w-24 h-10 rounded-full font-bold cursor-pointer">
+          <button className="bg-[#292727] text-white w-12 sm:w-24 h-8 sm:h-10 text-xs sm:text-base rounded-full font-bold cursor-pointer">
             SignUp
           </button>
         </Link>

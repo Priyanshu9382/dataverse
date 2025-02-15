@@ -1,25 +1,26 @@
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { mainQuestionState } from "../states/state";
 import Navigation from "../components/Navigation";
-import { Circle } from "lucide-react";
+import { Circle, Trash } from "lucide-react";
 import image from "../assets/avatar.jpg";
 import Left from "../components/Left";
 import { useRecoilState } from "recoil";
 export default function QuestionPage() {
-  const [questions] = useRecoilState(mainQuestionState);
+  const [questions, setQuestion] = useRecoilState(mainQuestionState);
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
-  const [input,setInput] = useState<string>("");
+  const [input, setInput] = useState<string>("");
   const [, setAnotherAnswer] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
   const question = questions.find((q) => q.id === Number(id));
-  
+  const navigate = useNavigate();
+
   if (!question) {
     return <div className="text-center text-red-500">Question not found</div>;
   }
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
-  }
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setHasSubmitted(true);
@@ -29,15 +30,22 @@ export default function QuestionPage() {
   const handleClick = () => {
     setHasSubmitted(false);
     setAnotherAnswer(true);
-  }
+  };
+  const handleDelete = () => {
+    const filteredQuestions = questions.filter((q) => q.id !== Number(id));
+    setHasSubmitted(false);
+    setAnotherAnswer(false);
+    setQuestion(filteredQuestions);
+    navigate("/");
+  };
   return (
     <div>
       <Navigation />
       <div className="flex h-screen">
         {/* The left side of the landing page */}
-        <Left/>
+        <Left />
         {/* The right side of the landing page */}
-        <div className="min-h-screen w-4/5 bg-[#1a1a1a] rounded-2xl ml-1 mr-1 p-4 flex flex-col gap-2 overflow-y-auto scrollbar-thin scroll scrollbar-track-black ">
+        <div className="min-h-screen w-full sm:w-4/5 bg-[#1a1a1a] rounded-2xl ml-1 mr-1 p-4 flex flex-col gap-2 overflow-y-auto scrollbar-thin scroll scrollbar-track-black ">
           <div className="flex gap-3 items-center">
             <img src={image} alt="user" className="w-15 h-15 rounded-full" />
             <span className="text-white text-lg font-bold">
@@ -46,9 +54,14 @@ export default function QuestionPage() {
           </div>
           <h1 className="text-2xl font-bold text-red-500">{question.title}</h1>
           <p className="text-gray-300 mt-2">{question.description}</p>
-          <p className="text-gray-300 rounded-3xl bg-[#2b2a2a] w-max p-2 mt-1">
-            Category: {question.category}
-          </p>
+          <span className="text-white inline">{(question.category.length > 1)? 'Categories:':'Category:'}</span>
+          <div className="flex gap-3">
+          {question.category.map((cat, index) => (
+            <p key={index} className="text-gray-300 rounded-3xl bg-[#2b2a2a] w-max p-2 mt-1">
+              {cat}
+            </p>
+          ))}
+          </div>
           <div className="ml-3 bg-[#2b2a2a] p-3 rounded-xl mt-3 overflow-y-scroll  pl-4  ">
             <h2 className="text-xl font-semibold mt-4 text-red-500">
               Answers:
@@ -71,7 +84,7 @@ export default function QuestionPage() {
                         className="ml-4 mt-2 text-sm p-2 rounded"
                       >
                         <p className="font-semibold text-white flex items-center gap-2">
-                        <Circle size={6} className="inline"/>  {comment.user}:
+                          <Circle size={6} className="inline" /> {comment.user}:
                         </p>
                         <p className="text-gray-300">{comment.text}</p>
                       </div>
@@ -100,6 +113,12 @@ export default function QuestionPage() {
               >
                 Answer
               </button>
+              <button 
+                onClick={handleDelete}
+                className="bg-red-600 w-24 h-10 rounded-full text-white font-bold cursor-pointer hover:bg-red-700 flex justify-center items-center"
+              >
+                <Trash size={20} color="white" />
+              </button>
             </div>
           </form>
           <div>
@@ -107,11 +126,11 @@ export default function QuestionPage() {
               <div className="text-red-600 text-lg mt-3">
                 <p>Your answer has been submitted!!</p>
                 <button
-                onClick={handleClick}
-                className="bg-red-600 w-44 h-12 rounded-full text-white font-bold cursor-pointer hover:bg-red-700"
-              >
-               Answer Again
-              </button>
+                  onClick={handleClick}
+                  className="bg-red-600 w-44 h-12 rounded-full text-white font-bold cursor-pointer hover:bg-red-700"
+                >
+                  Answer Again
+                </button>
               </div>
             )}
           </div>

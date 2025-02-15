@@ -9,12 +9,11 @@ import { useParams } from "react-router-dom";
 import Left from "../components/Left";
 const Categories: React.FC = () => {
   const [questions] = useRecoilState(mainQuestionState);
-  const { id } = useParams<{ id: string }>();
-  console.log(id);
-  const filteredQuestions: Question[] = questions.filter(
+  const { id } = useParams<{ id: string}>();
+  const filteredQuestions: Question[] = id ? questions.filter(
     (question: Question) =>
-      question.category.trim().toLowerCase() === id?.trim().toLowerCase()
-  );
+      question.category.map((cat) => cat.toLowerCase()).includes(id.toLowerCase())
+  ) : [];
   console.log(filteredQuestions);
 
   const count: number = filteredQuestions.length;
@@ -27,7 +26,7 @@ const Categories: React.FC = () => {
         <Left/>
 
         {/* Right Content */}
-        <div className="min-h-screen w-4/5 bg-[#1a1a1a] rounded-2xl ml-1 mr-1 p-5 overflow-y-auto scrollbar-thin scrollbar-track-black">
+        <div className="min-h-screen w-full sm:w-4/5 bg-[#1a1a1a] rounded-2xl ml-1 mr-1 p-5 overflow-y-auto scrollbar-thin scrollbar-track-black">
           <h1 className="text-3xl font-bold pl-5 text-gray-200">
             {" "}
             ({count} results found)

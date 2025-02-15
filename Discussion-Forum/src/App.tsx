@@ -1,4 +1,5 @@
-import {  Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router,  Routes, Route } from 'react-router-dom';
+import RouteListener from './components/RouteListener';
 import Question from './pages/Question';
 import Landing from './pages/Landing';
 import Popular from './pages/Popular';
@@ -12,6 +13,9 @@ import Signup from './pages/Signup';
 function App() {
   return (
     <RecoilRoot>
+      <Router>
+
+      <RouteListener /> {/* 🔥 Always updates Recoil state on route fetch */}
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/question/:id' element={<Question />} />
@@ -22,6 +26,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
         </Routes>
+      </Router>
     </RecoilRoot>
   );
 }

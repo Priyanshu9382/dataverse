@@ -19,7 +19,7 @@ const useSearch = (searchTerm: string) => {
                 questions.filter((question:Question) =>
                     question.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     question.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    question.category.toLowerCase().includes(searchTerm.toLowerCase()) 
+                    question.category.map((cat) => cat.toLowerCase()).includes(searchTerm.toLowerCase())
                 )
             );
             // and set filteredEvents

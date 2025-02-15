@@ -44,9 +44,9 @@ export default function Signup() {
           </form>
           <p className="text-gray-400 text-center mt-4">
             Already have an account?{" "}
-            <a href="/login" className="text-red-500 hover:underline">
-              Login
-            </a>
+            <Link to='/login' className="text-red-500">
+                Login
+            </Link>
           </p>
         </div>
       </div>

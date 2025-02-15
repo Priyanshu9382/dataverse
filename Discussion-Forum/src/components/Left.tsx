@@ -1,26 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Home, Layers, Flame } from "lucide-react";
 import React, { useState } from "react";
 import { Question } from "../assets/questionCard/QuestionData";
 import { useRecoilState } from "recoil";
-import { mainQuestionState } from "../states/state";
+import { isMenuClicked, mainQuestionState } from "../states/state";
 
 const Left = () => {
   const [question, setQuestion] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>('');
   const [questionsList, setQuestionsList] = useRecoilState(mainQuestionState);
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [isClicked, ] = useRecoilState(isMenuClicked);
+  const navigate = useNavigate();
   const handleQuestionSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!question.trim()) return; // Prevent empty submissions
+    if (!question.trim() || !description.trim() || !category.trim()) {
+      setIsEmpty(true);
+      navigate('/')
+      return;
+    }; // Prevent empty submissions
 
     // Create a new question object
     const newQuestion: Question = {
       id: questionsList.length + 1, // Generate a unique ID
       title: question,
       description: description, // You can enhance this
-      user: "GuestUser", // Assign dynamically if authentication is available
-      category: category, // You can add category selection
+      user: 'GuestUser', // Default user
+      category: category.split(',').map(cat => cat.trim()), // Split and trim categories
       isPopular: false,
       timestamp: new Date(),
       answers: [],
@@ -31,7 +38,7 @@ const Left = () => {
     setCategory("");
   };
   return (
-    <div className="h-full w-1/5 bg-[#1a1a1a] rounded-2xl ml-1 p-4 flex flex-col gap-1 ">
+    <div className={`h-full w-4/5 sm:w-1/5 ${isClicked? '':'-translate-x-96 '} absolute sm:static sm:translate-x-0 bg-[#1a1a1a] rounded-2xl ml-1 p-4 flex flex-col gap-1 `}>
       <Link to={"/"}>
         <div className="h-10 hover:bg-[#121212] flex items-center gap-2 pl-2 rounded-xl cursor-pointer">
           <Home size={20} color="white" />
@@ -55,6 +62,7 @@ const Left = () => {
         className="flex flex-col gap-2 mt-4"
       >
         <h1 className="text-xl text-red-600">Add Your Question</h1>
+        <p className={`${isEmpty? '':'hidden'} text-red-700`}>*All fields are mandatory</p>
         <label htmlFor="question" className="text-white pl-2">
           Question Title
         </label>
@@ -74,7 +82,7 @@ const Left = () => {
           className="bg-[#121212] text-white p-4 w-11/12 rounded-xl h-48 resize-none"
         ></textarea>
         <label htmlFor="question" className="text-white pl-2">
-          Question Label
+          Question Label <br /> <span className="text-[12px]">Separate the labels using comma(,)</span>
         </label>
         <input
           value={category}
