@@ -12,7 +12,6 @@ import Signup from './pages/Signup';
 function App() {
   return (
     <RecoilRoot>
-      <Router basename="/dataverse">  {/* Fix: Use BrowserRouter */}
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/question/:id' element={<Question />} />
@@ -23,7 +22,6 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
         </Routes>
-      </Router>
     </RecoilRoot>
   );
 }
