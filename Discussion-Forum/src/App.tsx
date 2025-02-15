@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {  Routes, Route } from 'react-router-dom';
 import Question from './pages/Question';
 import Landing from './pages/Landing';
 import Popular from './pages/Popular';
