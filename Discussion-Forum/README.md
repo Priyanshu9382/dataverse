@@ -1,12 +1,11 @@
 # DataVerse
 
 ## Overview
-This project is a web-based discussion forum where users can post Questions, answer the questions of others.
+This project is a web-based discussion forum where users can post Questions, answer the questions of others, delete a question and also search other discussions.
 
 ## Features
 - Create a Question
-- Answer other's Questions
-- Comment on other's answers
+- Delete a Question
 - Search functionality
 - Category based division 
 ## Technologies Used
@@ -38,10 +37,8 @@ This project is a web-based discussion forum where users can post Questions, ans
 There are few issues which are still not working in this website:
  - User authentication is not set, only the login and SignUp page is added but it does not work.
  - The answering option and comment option on any other's question has not been added yet. Just their frontend is added which only shows the prestored data.
- - Search functionality is just a basic one.
  - As user authentication has not been done, any one putting question would be given the user name Guest.
  - Also it store the question only upto the time the user is active, as the user refreshes the page the website shows only the prestored posts. 
- - When searched some term and then one gets redirected to the home page the searchbar is not set to empty automatically.
 
 ## Contact
 If you have any questions or suggestions, feel free to reach out to us at [priyanshu.web.dev123@gmail.com].
