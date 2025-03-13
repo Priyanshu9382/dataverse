@@ -1,0 +1,12 @@
+{
+  "name": "dataverse",
+  "version": "1.0.0",
+  "description": "It is a discussion forum for Data and ML related discussions",
+  "license": "ISC",
+  "author": "Priyanshu Mishra",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  }
+}
