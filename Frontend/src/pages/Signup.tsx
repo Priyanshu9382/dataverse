@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Signup: React.FC = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<{
     fullname: string;
     email: string;
@@ -52,6 +53,7 @@ const Signup: React.FC = () => {
       const data = await response.json();
       console.log(data);
       alert(data.message);
+      navigate('/')
     } catch (error) {
       console.log("Error: ", error);
       alert("Something went wrong, Please try again");
