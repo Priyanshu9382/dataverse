@@ -1,4 +1,4 @@
-new class ApiResponse{
+class ApiResponse{
     constructor(
         statusCode,
         data,
