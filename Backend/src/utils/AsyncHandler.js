@@ -9,6 +9,7 @@
 //   }
 // };
 
+// Writing an async function handler which removes the use to continuously write the try catch syntax instead it handles based on promises.
 const AsyncHandler = (requestHandler)=>{
     return (req, res, next)=>{
         Promise.resolve(requestHandler(req, res, next)).catch((err)=>next(err))

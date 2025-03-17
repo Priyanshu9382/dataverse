@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
+// Creating a schema for storing some information in database with the help of mongoose. Schema could be thought of as a format to store data with some restrictions determined by us. 
 const userSchema = new mongoose.Schema(
     {
         fullname: {
@@ -37,9 +38,13 @@ const userSchema = new mongoose.Schema(
                 ref: "Question"
             }
         ]
-    },{timestamps: true}
+    },
+    // By setting timestamps to true, database would automatically store createdAt and updatedAt field in db.
+    {timestamps: true}
 )
 
+// .pre() is a middleware used just before storing the data to database. it can be used in various ways either async await or by returning promise or as a simple function. It is called after .save() middleware is used. Since .save is a document middleware, this refers to the model. 
+// This functions check if the model's password is modified or not. If not then carry out the rest of the code otherwise hash the password using bcrypt.
 userSchema.pre("save",async function(next){
     if(!this.isModified("password")) return next();
 
@@ -47,14 +52,18 @@ userSchema.pre("save",async function(next){
     next()
 })
 
-userSchema.methods.hashPassword = async function (password){
-    return await bcrypt.hash(password,10)
+// Different methods that can be used for the model User.
+// userSchema.methods.hashPassword = async function (password){
+//     return await bcrypt.hash(password,10)
         
-}
+// }
+// Is password Correct checks the password by comparing the first argument which is not encrypted with the encrypted version of the data which is taken as the second argument. It returns either true or false.
 userSchema.methods.isPasswordCorrect = async function(password){
     return await bcrypt.compare(password, this.password)
 }
 
+// Generates Refresh Token
+// Jwt ( Jsonwebtoken ) takes three things as argument (payload, secret, options or callback). variety of syntax is given on the github page of jwt
 userSchema.methods.generateRefreshToken = async function(){
     return await jwt.sign(
         {
@@ -67,6 +76,9 @@ userSchema.methods.generateRefreshToken = async function(){
         }
     )
 }
+
+// Generates Access Token
+// Jwt ( Jsonwebtoken ) takes three things as argument (payload, secret, options or callback). variety of syntax is given on the github page of jwt
 userSchema.methods.generateAccessToken = async function(){
     return await jwt.sign(
         {
@@ -80,4 +92,5 @@ userSchema.methods.generateAccessToken = async function(){
     )
 }
 
+// Exporting the model 
 export const User = mongoose.model("User", userSchema)

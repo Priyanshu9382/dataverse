@@ -2,7 +2,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs'
 
 
-// Configuration
+// Configuration as same as given on cloudinary
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
     api_key: process.env.CLOUDINARY_API_KEY, 
@@ -19,10 +19,10 @@ const uploadonCloudinary = async function(localFilePath) {
                 resource_type: 'auto'
               } 
            )
-        fs.unlinkSync(localFilePath)
+        fs.unlinkSync(localFilePath) // deletes the file from local storage of server in case of success
         return response
     } catch (error) {
-        fs.unlinkSync(localFilePath)
+        fs.unlinkSync(localFilePath) // deletes the file from local storage of server in case of failure
         return null
     }
 }

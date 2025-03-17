@@ -1,7 +1,8 @@
-import 'dotenv/config'
+import 'dotenv/config' // configuring dotenv to access .env variables anywhere in the directory.
 import connectTODB from './db/db.js'
-import { app } from './app.js'
+import { app } from './app.js' // importing app so that it carries out all the functions.
 
+// connectTODB is run so and a promise type syntax is used. 
 connectTODB()
 .then(()=>{
     app.listen(process.env.PORT || 8000, ()=>{

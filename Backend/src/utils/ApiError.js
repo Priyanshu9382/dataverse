@@ -1,3 +1,4 @@
+// It is the extended form of Error class provided by nodejs . It is written just to send error in a more formatted way.
 class ApiError extends Error {
     constructor(
         statusCode,
