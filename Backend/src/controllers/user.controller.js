@@ -54,6 +54,59 @@ const registerUser = AsyncHandler(async(req, res)=>{
     )
 })
 
+// loginUser controller
+const loginUser = AsyncHandler(async(req, res)=>{
+    // Extract the data required for login and check for empty fields
+    const {email, password} = req.body
+    if(!email || !password){
+        throw new ApiError(400, "All Fields are required!")
+    }
 
+    // Check for user and if not found throw an error
+    const user = await User.findOne({email})
+    if(!user){
+        throw new ApiError(400, "User does not exist. Register first")
+    }
+    // verify password and if not matched throw an error
+    const isPasswordCorrect = await user.isPasswordCorrect(password)
+    if(!isPasswordCorrect){
+        throw new ApiError(400,"User credentials are incorrect")
+    }
+    // generate refresh and access token and store it in the db
+    
+    try {
+        console.log("user")
+        const refreshToken = await user.generateRefreshToken()
+        console.log("user")
+        const accessToken = await user.generateAccessToken()
+        user.refreshToken = refreshToken
+        user.accessToken = accessToken
+        await user.save({validateBeforeSave: false})
+    } catch (error) {
+        throw new ApiError(500, "Something went wrong while creating token")
+    }
+    const loggedInUser = await User.findById(user._id).select("-password ")
+    if(!loggedInUser){
+        throw new ApiError(500, "Something went wrong while fetching user details")
+    }
+
+    const options={
+        httpOnly: true,
+        secure: true
+    }
+    // return a response
+    return res
+    .status(201)
+    .cookie("accessToken", user.accessToken, options)
+    .cookie("refreshToken", user.refreshToken, options)
+    .json(
+        new ApiResponse(201, 
+            {
+                user: loggedInUser,
+                accessToken: user.accessToken
+            }
+            , "User Logged in successfully")
+    )
+})
 // Exporting all the user controllers
-export {registerUser}
+export {registerUser, loginUser}

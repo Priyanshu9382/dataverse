@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 // Creating a schema for storing some information in database with the help of mongoose. Schema could be thought of as a format to store data with some restrictions determined by us. 
 const userSchema = new mongoose.Schema(
@@ -70,7 +71,7 @@ userSchema.methods.generateRefreshToken = async function(){
             _id: this._id,
             email: this.email,
             fullname: this.fullname,
-        }, process.envv.REFRESH_TOKEN_SECRET,
+        }, process.env.REFRESH_TOKEN_SECRET,
         {
             expiresIn: process.env.REFRESH_TOKEN_EXPIRY
         }
@@ -85,7 +86,7 @@ userSchema.methods.generateAccessToken = async function(){
             _id: this._id,
             email: this.email,
             fullname: this.fullname,
-        }, process.envv.ACCESS_TOKEN_SECRET,
+        }, process.env.ACCESS_TOKEN_SECRET,
         {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }
