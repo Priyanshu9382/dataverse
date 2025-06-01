@@ -1,25 +1,13 @@
-import { useEffect, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-interface UserProtectedWrapperProps {
-  children: ReactNode;
-}
-
-const UserProtectedWrapper: React.FC<UserProtectedWrapperProps> = ({ children }) => {
-  const token: string | null = localStorage.getItem("token");
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  }, [token, navigate]);
+const UserProtectedWrapper = () => {
+  const token = localStorage.getItem("token");
 
   if (!token) {
-    return null;
+    return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>;
+  return <Outlet />;
 };
 
 export default UserProtectedWrapper;
