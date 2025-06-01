@@ -7,7 +7,7 @@ const connectToDB = async() =>{
         await mongoose.connect(process.env.MONGO_URI);
         console.log("Database successfully connected");       
     } catch (error) {
-        console.log("Mongodb connection error:", err);
+        console.log("Mongodb connection error:", error);
         // process.exit() is used to forcefully stop all the synchronously assigned tasks and exit the code asap. Node generally exits the process using the code 0 which is a success code and nonzero code means failure.
         process.exit(1);
     }
