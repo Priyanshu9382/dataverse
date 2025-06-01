@@ -1,15 +1,27 @@
 import { Link } from "react-router-dom";
-import React,{  useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { inputState, searchTermState, questionState, isMenuClicked } from "../states/state";
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  inputState,
+  searchTermState,
+  questionState,
+  isMenuClicked,
+  userState,
+} from "../states/state";
 import useSearch from "./useSearch";
 import { useNavigate } from "react-router-dom";
-import { Menu,X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { Question, user } from "../assets/questionCard/QuestionData";
+
 const Navigation = () => {
-  const [input, setInput] = useRecoilState(inputState);
-  const [searchTerm, setSearchTerm] = useRecoilState(searchTermState);
-  const [, setFilteredEvents] = useRecoilState(questionState);
-  const [isClicked, setIsClicked] = useRecoilState(isMenuClicked);
+  const [input, setInput] = useRecoilState<string>(inputState);
+  const [searchTerm, setSearchTerm] = useRecoilState<string>(searchTermState);
+  const [, setFilteredEvents] = useRecoilState<Question[]>(questionState);
+  const [isClicked, setIsClicked] = useRecoilState<boolean>(isMenuClicked);
+  const [isLogoClicked, setIsLogoClicked] = useState<boolean>(false);
+  const user = useRecoilValue<user>(userState);
+  console.log(user);
+
   const navigate = useNavigate();
 
   // Get search results
@@ -32,8 +44,10 @@ const Navigation = () => {
   };
   const handleClick = () => {
     setIsClicked(!isClicked);
+  };
+  const handleLogoClick =() =>{
+    setIsLogoClicked(!isLogoClicked)
   }
-  console.log(isClicked);
   // Update Recoil state when results change
   useEffect(() => {
     setFilteredEvents(results);
@@ -48,11 +62,19 @@ const Navigation = () => {
             DataVerse
           </Link>
         </span>
-        <span className={`sm:hidden ${!isClicked?'':'hidden'} text-2xl text-red-600 cursor-pointer`}>
-            <Menu onClick={handleClick} size={30} color="white" />
+        <span
+          className={`sm:hidden ${
+            !isClicked ? "" : "hidden"
+          } text-2xl text-red-600 cursor-pointer`}
+        >
+          <Menu onClick={handleClick} size={30} color="white" />
         </span>
-        <span className={`sm:hidden ${isClicked?'':'hidden'} text-2xl text-red-600 cursor-pointer`}>
-            <X onClick={handleClick} size={30} color="white" />
+        <span
+          className={`sm:hidden ${
+            isClicked ? "" : "hidden"
+          } text-2xl text-red-600 cursor-pointer`}
+        >
+          <X onClick={handleClick} size={30} color="white" />
         </span>
       </div>
 
@@ -67,18 +89,42 @@ const Navigation = () => {
       />
 
       {/* The login and signup buttons */}
-      <div className="btns flex gap-2 justify-end sm:w-2xs ">
-        <Link to={"/login"}>
-          <button className="bg-red-600 w-12 sm:w-24 h-8 sm:h-10 rounded-full text-xs sm:text-base text-white font-bold cursor-pointer">
-            Login
-          </button>
-        </Link>
-        <Link to={"/signup"}>
-          <button className="bg-[#292727] text-white w-12 sm:w-24 h-8 sm:h-10 text-xs sm:text-base rounded-full font-bold cursor-pointer">
-            SignUp
-          </button>
-        </Link>
-      </div>
+      {user ? (
+        <div className="flex gap-2 justify-end sm:w-2xs">
+          <img
+            src={user.profileImg}
+            onClick={handleLogoClick}
+            alt="LogoImg"
+            className="h-12 w-12 rounded-full mr-5"
+          />
+          <div className={`bg-black   absolute top-16 rounded-xl opacity-75 p-5 ${isLogoClicked? "": "hidden"} `}>
+            <ul className={`flex flex-col gap-2`}>
+              <Link to={'/user/profile'}>
+              <li>Your Profile</li>
+              </Link>
+              <Link to={'/settings'}>
+              <li>Settings</li>
+              </Link>
+              <Link to={'/user/logout'}>
+              <li>Logout</li>
+              </Link>
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <div className="btns flex gap-2 justify-end sm:w-2xs ">
+          <Link to={"/login"}>
+            <button className="bg-red-600 w-12 sm:w-24 h-8 sm:h-10 rounded-full text-xs sm:text-base text-white font-bold cursor-pointer">
+              Login
+            </button>
+          </Link>
+          <Link to={"/signup"}>
+            <button className="bg-[#292727] text-white w-12 sm:w-24 h-8 sm:h-10 text-xs sm:text-base rounded-full font-bold cursor-pointer">
+              SignUp
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

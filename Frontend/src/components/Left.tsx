@@ -38,7 +38,7 @@ const Left = () => {
     setCategory("");
   };
   return (
-    <div className={`h-full w-4/5 sm:w-1/5 ${isClicked? '':'-translate-x-96 '} absolute sm:static sm:translate-x-0 bg-[#1a1a1a] rounded-2xl ml-1 p-4 flex flex-col gap-1 `}>
+    <div className={`h-full w-4/5 sm:w-1/5 ${isClicked? '':'-translate-x-[500px] '} absolute sm:static sm:translate-x-0  bg-[#1a1a1a] rounded-2xl ml-1 p-4 flex flex-col gap-1 `}>
       <Link to={"/"}>
         <div className="h-10 hover:bg-[#121212] flex items-center gap-2 pl-2 rounded-xl cursor-pointer">
           <Home size={20} color="white" />

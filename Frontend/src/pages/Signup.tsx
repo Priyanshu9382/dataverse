@@ -53,7 +53,7 @@ const Signup: React.FC = () => {
       const data = await response.json();
       console.log(data);
       alert(data.message);
-      navigate('/')
+      navigate('/login')
     } catch (error) {
       console.log("Error: ", error);
       alert("Something went wrong, Please try again");

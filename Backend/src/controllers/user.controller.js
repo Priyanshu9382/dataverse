@@ -75,9 +75,7 @@ const loginUser = AsyncHandler(async(req, res)=>{
     // generate refresh and access token and store it in the db
     
     try {
-        console.log("user")
         const refreshToken = await user.generateRefreshToken()
-        console.log("user")
         const accessToken = await user.generateAccessToken()
         user.refreshToken = refreshToken
         user.accessToken = accessToken
@@ -107,6 +105,10 @@ const loginUser = AsyncHandler(async(req, res)=>{
             }
             , "User Logged in successfully")
     )
+})
+// Profile controller
+const getProfile = AsyncHandler(async(req, res)=>{
+    
 })
 // Exporting all the user controllers
 export {registerUser, loginUser}

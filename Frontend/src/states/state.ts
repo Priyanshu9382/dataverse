@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Question, questions } from "../assets/questionCard/QuestionData";
+import { Question, questions, user } from "../assets/questionCard/QuestionData";
 
 // ✅ Search input state
 export const inputState = atom<string>({
@@ -30,3 +30,19 @@ export const isMenuClicked = atom<boolean>({
   key: "isMenuClicked",
   default: false, // Initially, menu is closed
 });
+
+
+export const userState = atom<user>({
+  key: "userState",
+  default: {
+    id: "",
+    about: "",
+    createdAt: new Date(),
+    email: '',
+    fullname: '',
+    profileImg: "http://res.cloudinary.com/ds3dwvbbq/image/upload/v1743239679/kccekdnrtzgnqv0i8qrf.jpg",
+    questions: [],
+    refreshToken: "",
+    updatedAt: new Date()
+  },
+})
