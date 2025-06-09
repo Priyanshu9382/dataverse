@@ -44,7 +44,7 @@ const Signup: React.FC = () => {
     }
     try {
       const response = await fetch(
-        "http://localhost:8000/api/v1/user/register",
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/register`,
         {
           method: "POST",
           body: RegistrationData,
