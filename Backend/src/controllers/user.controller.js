@@ -23,7 +23,7 @@ const registerUser = AsyncHandler(async(req, res)=>{
     }
 
     // Store the profileImg's local path in the server as it was uploaded on the server by multer middleware
-    const profileImgPath = req.file.path
+    const profileImgPath = req.file.buffer
 
     // Upload the profileImg on cloudinary which is a third party app for media storage and it also deletes the locally uploaded file in either cases of success or failure. If failed then throw an error.
     const profileImg = await uploadonCloudinary(profileImgPath)
