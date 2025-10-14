@@ -13,18 +13,18 @@ const Signup: React.FC = () => {
     password: "",
     about: "",
   });
-  const [image, setImage] = useState<File | null>(null);
+  // const [image, setImage] = useState<File | null>(null);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-  const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImage(e.target.files[0]);
-    }
-  };
+  // const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     setImage(e.target.files[0]);
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,14 +34,14 @@ const Signup: React.FC = () => {
     RegistrationData.append("email", formData.email);
     RegistrationData.append("password", formData.password);
     RegistrationData.append("about", formData.about);
-    if (image) {
-      RegistrationData.append("profileImg", image);
-    }
+    // if (image) {
+    //   RegistrationData.append("profileImg", image);
+    // }
 
-    if (!image) {
-      alert("Please upload an image");
-      return;
-    }
+    // if (!image) {
+    //   alert("Please upload an image");
+    //   return;
+    // }
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/register`,
@@ -112,7 +112,7 @@ const Signup: React.FC = () => {
                 placeholder="Enter your password"
               />
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label className="block text-gray-300 mb-2">
                 Upload profile picture
               </label>
@@ -125,7 +125,7 @@ const Signup: React.FC = () => {
                 required
                 
               />
-            </div>
+            </div> */}
 
             <button
               className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded"

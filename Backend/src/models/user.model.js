@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema(
         },
         about: {
             type: String,
-            required: true,
             lowercase: true
         },
         email: {
@@ -27,7 +26,6 @@ const userSchema = new mongoose.Schema(
         },
         profileImg: {
             type: String,
-            required: true,
         },
         refreshToken: {
             type: String,

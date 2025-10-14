@@ -9,7 +9,7 @@ import { RecoilRoot } from "recoil";
 import Browse from "./pages/Browse";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import UserProtectedWrapper from "./pages/UserProtectedWrapper";
+// import UserProtectedWrapper from "./pages/UserProtectedWrapper";
 import Logout from "./pages/Logout";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
@@ -21,12 +21,12 @@ function App() {
         <RouteListener />
         <Routes>
           {/* Public routes */}
+            <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
           {/* Protected routes */}
-          <Route element={<UserProtectedWrapper />}>
-            <Route path="/" element={<Landing />} />
+          {/* <Route element={<UserProtectedWrapper />}> */}
             <Route path="/question/:id" element={<Question />} />
             <Route path="/popular" element={<Popular />} />
             <Route path="/categories" element={<Categories />} />
@@ -35,7 +35,7 @@ function App() {
             <Route path="/user/logout" element={<Logout />} />
             <Route path="/user/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
-          </Route>
+          {/* </Route> */}
         </Routes>
       </Router>
     </RecoilRoot>

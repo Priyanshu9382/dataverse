@@ -21,7 +21,8 @@ app.use(cookieParser())
 
 // Router is imported in this app 
 import userRouter from './routes/user.route.js'
+import queRouter from './routes/que.route.js'
 app.use("/api/v1/user", userRouter) // here it is set that if '/api/v1/user' is hit then the userRouter is given the control to carry out the further routing.
-
+app.use("/api/v1", queRouter)
 
 export {app}
