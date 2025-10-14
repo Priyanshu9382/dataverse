@@ -1,6 +1,7 @@
 import express from 'express'
-import {registerUser, loginUser} from '../controllers/user.controller.js'
+import {registerUser, loginUser,logoutUser} from '../controllers/user.controller.js'
 import {upload} from '../middlewares/multer.middleware.js'
+import { verifyJwt } from '../middlewares/auth.middleware.js'
 const router = express.Router()
 
 // the router can be considered as switch as if the route hit by user is register it would do the following thing or if the user hits /login then do this.
@@ -12,4 +13,8 @@ router.route('/register').post(
     registerUser)
 
 router.route('/login').post(loginUser)
+router.route('/logout').post(
+    verifyJwt,
+    logoutUser
+)
 export default router

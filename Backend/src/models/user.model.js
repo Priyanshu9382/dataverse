@@ -66,7 +66,7 @@ userSchema.methods.isPasswordCorrect = async function(password){
 // Generates Refresh Token
 // Jwt ( Jsonwebtoken ) takes three things as argument (payload, secret, options or callback). variety of syntax is given on the github page of jwt
 userSchema.methods.generateRefreshToken = async function(){
-    return await jwt.sign(
+    return  jwt.sign(
         {
             _id: this._id,
             email: this.email,
@@ -81,7 +81,7 @@ userSchema.methods.generateRefreshToken = async function(){
 // Generates Access Token
 // Jwt ( Jsonwebtoken ) takes three things as argument (payload, secret, options or callback). variety of syntax is given on the github page of jwt
 userSchema.methods.generateAccessToken = async function(){
-    return await jwt.sign(
+    return  jwt.sign(
         {
             _id: this._id,
             email: this.email,

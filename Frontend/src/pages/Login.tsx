@@ -21,7 +21,7 @@ export default function Login() {
     // user.append("password", password);
     // console.log(user)
     try {
-      const response = await fetch("http://localhost:8000/api/v1/user/login",{
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/login`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",  // Ensure JSON format
